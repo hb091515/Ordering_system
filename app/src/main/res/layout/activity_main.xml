@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!--第一層水平佈局-->
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <SearchView
+            android:id="@+id/Search_View"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:autofillHints="@string/search_restaurant"
+            android:inputType="text" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:padding="8dp"
+            android:src="@drawable/cart" />
+
+
+    </LinearLayout>
+
+    <!--第二層水平佈局-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/recommend_restaurant"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:typeface="sans" />
+
+    </LinearLayout>
+
+
+    <!--第三層水平佈局-->
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="16dp"
+                android:scaleType="centerCrop"/>
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+    <!--第四層水平佈局-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/all_restaurant"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:typeface="sans" />
+
+
+    </LinearLayout>
+
+    <!--第五層水平佈局-->
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <ImageView
+                    android:id="@+id/scrollimage1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="24dp"/>
+
+                <ImageView
+                    android:id="@+id/scrollimage2"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="24dp"/>
+
+                <ImageView
+                    android:id="@+id/scrollimage3"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="24dp"/>
+
+                <ImageView
+                    android:id="@+id/scrollimage4"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="24dp"/>
+
+                <ImageView
+                    android:id="@+id/scrollimage5"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="24dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+    <!--第六層水平佈局-->
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+
+
+        <Button
+            android:id="@+id/First_MenuButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="@string/first_restaurant"
+            android:textColor="#ffa726"
+            android:typeface="sans" />
+
+
+        <Button
+            android:id="@+id/Second_MenuButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="@string/second_restaurant"
+            android:textColor="#ffa726"
+            android:typeface="sans" />
+
+        <Button
+            android:id="@+id/Third_MenuButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="@string/third_restaurant"
+            android:textColor="#ffa726"
+            android:typeface="sans" />
+
+        <Button
+            android:id="@+id/User_Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:text="@string/user"
+            android:textColor="#ffa726"
+            android:typeface="sans" />
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
