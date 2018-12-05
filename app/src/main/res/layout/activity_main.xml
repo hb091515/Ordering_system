@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/scollview1"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
@@ -92,35 +92,35 @@
                 android:scaleType="centerCrop"/>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/scollview2"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
                 android:scaleType="centerCrop"/>
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/scollview3"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
                 android:scaleType="centerCrop"/>
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/scollview4"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
                 android:scaleType="centerCrop"/>
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/scollview5"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
                 android:scaleType="centerCrop"/>
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/scollview6"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
@@ -230,7 +230,7 @@
 
 
         <Button
-            android:id="@+id/First_MenuButton"
+            android:id="@+id/First_Resuaurant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -241,7 +241,7 @@
 
 
         <Button
-            android:id="@+id/Second_MenuButton"
+            android:id="@+id/Second_Resaurant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -251,7 +251,7 @@
             android:typeface="sans" />
 
         <Button
-            android:id="@+id/Third_MenuButton"
+            android:id="@+id/Third_Resaurant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
