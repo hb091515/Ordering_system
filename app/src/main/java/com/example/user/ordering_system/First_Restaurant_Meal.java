@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +19,8 @@ import com.example.user.ordering_system.entities.Dish;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.media.CamcorderProfile.get;
 
 /**
  * 校內第一餐廳內的餐點
@@ -30,6 +33,8 @@ public class First_Restaurant_Meal extends AppCompatActivity {
     String[] cost = {"$20", "$30", "$40"};
     double [] price = {20, 30, 40};
     List<Dish> shopCart = new ArrayList<>();
+    ImageButton btnshopcart;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,15 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         listView = findViewById(R.id.meal_list);
         meal_list adapter=new meal_list();
         listView.setAdapter(adapter);
+        btnshopcart=findViewById(R.id.shopcart);
+        btnshopcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent shopcar=new Intent();
+                shopcar.setClass(First_Restaurant_Meal.this,Shopping_cart.class);
+                startActivity(shopcar);
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -52,10 +66,16 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 shopCart.add(dish);
 
                 //傳輸資料到另外一個Activity
+                Dish abc=shopCart.get(position);
                 Bundle bundle=new Bundle();
-                bundle.putParcelable("name",dish);
-                Intent intent=new Intent(First_Restaurant_Meal.this,Shopping_cart.class);
+                bundle.putParcelable("aaa",abc);
+
+                Intent intent=new Intent(view.getContext(),Shopping_cart.class);
                 intent.putExtras(bundle);
+
+
+
+
 
                 Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + " has added to cart.", Toast.LENGTH_LONG)
                         .show();
