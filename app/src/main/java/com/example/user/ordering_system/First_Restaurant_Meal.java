@@ -1,5 +1,7 @@
 package com.example.user.ordering_system;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +51,12 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 Dish dish = new Dish(name[position], price[position]);
                 shopCart.add(dish);
 
+                //傳輸資料到另外一個Activity
+                Bundle bundle=new Bundle();
+                bundle.putParcelable("name",dish);
+                Intent intent=new Intent(First_Restaurant_Meal.this,Shopping_cart.class);
+                intent.putExtras(bundle);
+
                 Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + " has added to cart.", Toast.LENGTH_LONG)
                         .show();
             }
@@ -69,7 +77,6 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-
             return 0;
         }
 
