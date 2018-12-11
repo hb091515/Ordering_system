@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".first_restaurant" />
         <activity android:name=".First_Restaurant_Meal" />
-        <activity android:name=".Shopping_cart"></activity>
+        <activity
+            android:name=".Shopping_car"
+            android:label="@string/title_activity_shopping_car"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
