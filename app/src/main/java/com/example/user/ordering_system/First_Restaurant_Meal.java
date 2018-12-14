@@ -32,7 +32,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
     String[] name = {"紅茶", "綠茶", "奶茶"};
     String[] cost = {"$20", "$30", "$40"};
     double [] price = {20, 30, 40};
-    List<Dish> shopCart = new ArrayList<>();
+    ArrayList<Dish> shopCart = new ArrayList<Dish>();
     ImageButton btnshopcart;
 
 
@@ -45,6 +45,13 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         meal_list adapter=new meal_list();
         listView.setAdapter(adapter);
         btnshopcart=findViewById(R.id.shopcart);
+
+
+
+
+
+
+
         btnshopcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +72,11 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 Dish dish = new Dish(name[position], price[position]);
                 shopCart.add(dish);
 
-                //傳輸資料到另外一個Activity
-                Dish abc=shopCart.get(position);
-                Bundle bundle=new Bundle();
-                bundle.putParcelable("aaa",abc);
 
-                Intent intent=new Intent(view.getContext(),Shopping_cart.class);
-                intent.putExtras(bundle);
+                //傳輸資料到另外一個Activity
+                Intent intent=new Intent(First_Restaurant_Meal.this,Shopping_cart.class);
+                intent.putParcelableArrayListExtra("dish",shopCart);
+
 
 
 
@@ -82,6 +87,11 @@ public class First_Restaurant_Meal extends AppCompatActivity {
             }
         });
 
+    }
+
+    public class ViewHolder{
+        public TextView dname;
+        public TextView dprice;
     }
 
     class meal_list extends BaseAdapter {
@@ -102,16 +112,23 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View v = convertView;
-            if (v == null) {
-                v = getLayoutInflater().inflate(R.layout.first_restaurant_meal_item, null);
-                TextView tname = v.findViewById(R.id.mealname);
-                TextView tcost = v.findViewById(R.id.mealcost);
-                tname.setText(name[position]);
-                tcost.setText(cost[position]);
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.first_restaurant_meal_item, null);
 
+                viewHolder=new ViewHolder();
+                viewHolder.dname=convertView.findViewById(R.id.mealname);
+                viewHolder.dprice=convertView.findViewById(R.id.mealcost);
+
+                viewHolder.dname.setText(name[position]);
+                viewHolder.dprice.setText(cost[position]);
+                convertView.setTag(viewHolder);
+
+            }else{
+                viewHolder=(ViewHolder)convertView.getTag();
             }
-            return v;
+
+            return convertView;
         }
     }
 }

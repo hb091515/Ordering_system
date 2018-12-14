@@ -19,7 +19,8 @@ import java.util.ArrayList;
 public class Shopping_cart extends AppCompatActivity {
 
     ImageButton btnback;
-    TextView TxTtitle;
+    ArrayList<Dish> shoppingcart=new ArrayList<Dish>();
+
 
 
     @Override
@@ -30,8 +31,7 @@ public class Shopping_cart extends AppCompatActivity {
         findview();
 
         //接收資料
-        Bundle bundle=getIntent().getExtras();
-        Dish e=bundle.getParcelable("aaa");
+        shoppingcart=getIntent().getParcelableArrayListExtra("dish");
 
 
 
@@ -49,40 +49,8 @@ public class Shopping_cart extends AppCompatActivity {
 
     private void findview() {
         btnback=findViewById(R.id.btnbackicon);
-        TxTtitle=findViewById(R.id.title);
+
     }
 
-    /*class cartadapter extends BaseAdapter{
-        @Override
-        public int getCount() {
-            return 0;
-        }
 
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view=convertView;
-            if(view==null){
-                view=getLayoutInflater().inflate(R.layout.shoppingcart_item,null);
-                Button btnreduce=view.findViewById(R.id.reduce);
-                TextView QTY=view.findViewById(R.id.Quantity);
-                Button btnincrease=view.findViewById(R.id.increase);
-                TextView dishname=view.findViewById(R.id.dishname);
-                TextView dishcost=view.findViewById(R.id.dishcost);
-
-
-
-            }
-            return view;
-        }
-    }*/
 }
