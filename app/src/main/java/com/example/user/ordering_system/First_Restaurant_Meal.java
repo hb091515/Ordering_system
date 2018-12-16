@@ -1,7 +1,6 @@
 package com.example.user.ordering_system;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,15 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.ordering_system.entities.Dish;
+import com.example.user.ordering_system.shopCart.ShopCart;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.media.CamcorderProfile.get;
 
@@ -32,7 +30,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
     String[] name = {"紅茶", "綠茶", "奶茶"};
     String[] cost = {"$20", "$30", "$40"};
     double [] price = {20, 30, 40};
-    ArrayList<Dish> shopCart = new ArrayList<Dish>();
+    ArrayList<Dish> selectItems = new ArrayList<>();
     ImageButton btnshopcart;
 
 
@@ -50,16 +48,25 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
 
 
-
-
+        // Call Shopping_cart activity with the current cart.
+        // Pass current cart to
         btnshopcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent shopcar=new Intent();
-                shopcar.setClass(First_Restaurant_Meal.this,Shopping_cart.class);
-                startActivity(shopcar);
+                // 建立 intent, 第一個參數為目前的 context, 第二個參數為要啟動的 Activity Class
+                Intent intentShopCartActivity=new Intent(First_Restaurant_Meal.this, Shopping_cart.class);
+                ShopCart shopCart = new ShopCart(selectItems);
+                intentShopCartActivity.putExtra("cart", shopCart);
+//                exeShopping_cart_activity.setClass(First_Restaurant_Meal.this,Shopping_cart.class);
+
+
+//                bundle.putStringArrayList("dishes", selectItems);
+//                exeShopping_cart_activity.put
+                startActivity(intentShopCartActivity);
             }
         });
+
+        // 點選清單上的項目加入購物車
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,16 +77,12 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                         .append(" Row ID: " + id);
                 Log.e(tag + "Position", sb.toString() );
                 Dish dish = new Dish(name[position], price[position]);
-                shopCart.add(dish);
+                selectItems.add(dish);
 
 
                 //傳輸資料到另外一個Activity
-                Intent intent=new Intent(First_Restaurant_Meal.this,Shopping_cart.class);
-                intent.putParcelableArrayListExtra("dish",shopCart);
-
-
-
-
+//                Intent intent=new Intent(First_Restaurant_Meal.this,Shopping_cart.class);
+//                intent.putParcelableArrayListExtra("dish",selectItems);
 
 
                 Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + " has added to cart.", Toast.LENGTH_LONG)
