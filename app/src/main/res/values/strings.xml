@@ -7,6 +7,7 @@
     <string name="recommend_restaurant">推薦餐廳</string>
     <string name="all_restaurant">所有餐廳</string>
     <string name="user">會員</string>
+    <string name="reduce">-</string>
 
 
 </resources>
