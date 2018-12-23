@@ -21,17 +21,18 @@ import java.util.ArrayList;
 import static android.media.CamcorderProfile.get;
 
 /**
- * 校內第一餐廳內的餐點
+ * 手作荼坊餐廳內的餐點
  */
 public class First_Restaurant_Meal extends AppCompatActivity {
 
 
-    ListView listView;
+    ListView mealListView;
     String[] name = {"紅茶", "綠茶", "奶茶"};
     String[] cost = {"$20", "$30", "$40"};
     double [] price = {20, 30, 40};
+
     ArrayList<Dish> selectItems = new ArrayList<>();
-    ImageButton btnshopcart;
+    ImageButton btnShopCart;
 
 
     @Override
@@ -39,35 +40,26 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first__restaurant__meal);
         setTitle("手作茶坊");
-        listView = findViewById(R.id.meal_list);
+        mealListView = findViewById(R.id.meal_list);
         meal_list adapter=new meal_list();
-        listView.setAdapter(adapter);
-        btnshopcart=findViewById(R.id.shopcart);
-
-
-
-
+        mealListView.setAdapter(adapter);
+        btnShopCart =findViewById(R.id.shopcart);
 
         // Call Shopping_cart activity with the current cart.
         // Pass current cart to
-        btnshopcart.setOnClickListener(new View.OnClickListener() {
+        btnShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 建立 intent, 第一個參數為目前的 context, 第二個參數為要啟動的 Activity Class
                 Intent intentShopCartActivity=new Intent(First_Restaurant_Meal.this, Shopping_cart.class);
                 ShopCart shopCart = new ShopCart(selectItems);
                 intentShopCartActivity.putExtra("cart", shopCart);
-//                exeShopping_cart_activity.setClass(First_Restaurant_Meal.this,Shopping_cart.class);
-
-
-//                bundle.putStringArrayList("dishes", selectItems);
-//                exeShopping_cart_activity.put
                 startActivity(intentShopCartActivity);
             }
         });
 
         // 點選清單上的項目加入購物車
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mealListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Add the meal to the shopping cart
@@ -79,9 +71,6 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 Dish dish = new Dish(name[position], price[position]);
                 selectItems.add(dish);
 
-
-
-
                 Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + " has added to cart.", Toast.LENGTH_LONG)
                         .show();
             }
@@ -89,10 +78,10 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
     }
 
-    private static class ViewHolder{
-        TextView dname;
-        TextView dprice;
-    }
+//    private static class ViewHolder{
+//        TextView dname;
+//        TextView dprice;
+//    }
 
     class meal_list extends BaseAdapter {
         @Override
@@ -112,21 +101,27 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+//            ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.first_restaurant_meal_item, null);
 
-                viewHolder=new ViewHolder();
-                viewHolder.dname=convertView.findViewById(R.id.mealname);
-                viewHolder.dprice=convertView.findViewById(R.id.mealcost);
+//                viewHolder=new ViewHolder();
+                TextView mealName = convertView.findViewById(R.id.mealname);
+                TextView mealCost = convertView.findViewById(R.id.mealcost);
+//                viewHolder.dname=convertView.findViewById(R.id.mealname);
+//                viewHolder.dprice=convertView.findViewById(R.id.mealcost);
 
-                viewHolder.dname.setText(name[position]);
-                viewHolder.dprice.setText(cost[position]);
-                convertView.setTag(viewHolder);
+//                viewHolder.dname.setText(name[position]);
+
+//                viewHolder.dprice.setText(cost[position]);
+                mealName.setText(name[position]);
+                mealCost.setText(cost[position]);
+//                convertView.setTag(viewHolder);
 
 
             }else{
-                viewHolder=(ViewHolder)convertView.getTag();
+                // 這行有什麼作用?
+//                viewHolder=(ViewHolder)convertView.getTag();
             }
 
             return convertView;
