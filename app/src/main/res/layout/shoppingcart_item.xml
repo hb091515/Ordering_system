@@ -28,7 +28,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="?android:textAppearanceMedium"
-        android:text="0"
+        android:text="1"
         app:layout_constraintStart_toEndOf="@+id/reduce"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dishcost"
+        android:id="@+id/dishprice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

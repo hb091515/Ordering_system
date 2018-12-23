@@ -80,9 +80,6 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 selectItems.add(dish);
 
 
-                //傳輸資料到另外一個Activity
-//                Intent intent=new Intent(First_Restaurant_Meal.this,Shopping_cart.class);
-//                intent.putParcelableArrayListExtra("dish",selectItems);
 
 
                 Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + " has added to cart.", Toast.LENGTH_LONG)
@@ -92,9 +89,9 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
     }
 
-    public class ViewHolder{
-        public TextView dname;
-        public TextView dprice;
+    private static class ViewHolder{
+        TextView dname;
+        TextView dprice;
     }
 
     class meal_list extends BaseAdapter {
@@ -126,6 +123,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 viewHolder.dname.setText(name[position]);
                 viewHolder.dprice.setText(cost[position]);
                 convertView.setTag(viewHolder);
+
 
             }else{
                 viewHolder=(ViewHolder)convertView.getTag();
