@@ -40,4 +40,19 @@ public class Dish implements Serializable {
         mPrice = price;
     }
 
-}
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Dish)){
+            return false;}
+
+        Dish dish=(Dish) obj;
+        return dish.mTitle == mTitle
+                && dish.mPrice == mPrice;}
+    }
+
+

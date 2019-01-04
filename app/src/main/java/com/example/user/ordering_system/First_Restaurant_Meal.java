@@ -1,6 +1,10 @@
 package com.example.user.ordering_system;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +21,8 @@ import com.example.user.ordering_system.entities.Dish;
 import com.example.user.ordering_system.shopCart.ShopCart;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import static android.media.CamcorderProfile.get;
 
@@ -58,6 +64,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
             }
         });
 
+
         // 點選清單上的項目加入購物車
         mealListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -69,10 +76,17 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                         .append(" Row ID: " + id);
                 Log.e(tag + "Position", sb.toString() );
                 Dish dish = new Dish(name[position], price[position]);
-                selectItems.add(dish);
 
-                Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + " has added to cart.", Toast.LENGTH_LONG)
-                        .show();
+
+
+                //判斷dish有沒有已經加入購物車裡面，避免餐點重複加入
+                if(selectItems.contains(dish)){
+                    Toast.makeText(First_Restaurant_Meal.this,dish.getTitle()+"already esists in cart",Toast.LENGTH_SHORT).show();
+                }else{
+                    selectItems.add(dish);
+                    Toast.makeText(First_Restaurant_Meal.this,dish.getTitle()+"add to the cart",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

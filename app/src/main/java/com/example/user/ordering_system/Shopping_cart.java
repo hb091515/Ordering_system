@@ -29,8 +29,9 @@ public class Shopping_cart extends AppCompatActivity {
     ImageButton btnback;
     ArrayList<Dish> selectItems=new ArrayList<>();
     private static final String TAG = "ShoppingCartActivity";
-    TextView numberOfItems;
+    TextView numberOfItems,txt_total;
     ListView shopcarlist;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class Shopping_cart extends AppCompatActivity {
         carlistadapter list=new carlistadapter(this,selectItems);
         shopcarlist=findViewById(R.id.dish_list);
         shopcarlist.setAdapter(list);
+        list.notifyDataSetChanged();
 
         //點擊返回icon,關閉購物車頁面
         btnback.setOnClickListener(new View.OnClickListener() {
@@ -60,23 +62,34 @@ public class Shopping_cart extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        //計算總金額
+
+
+
+
     }
+
 
     private void findview() {
         btnback=findViewById(R.id.btnbackicon);
+        txt_total=findViewById(R.id.total);
 
     }
 
+
+
     //使用自訂義的ArrayAdapter
-public class carlistadapter extends ArrayAdapter<Dish>{
+    public class carlistadapter extends ArrayAdapter<Dish>{
         public carlistadapter(Context context,ArrayList<Dish> object){
             super(context,0,object);
         }
 
     @Override
-    public View getView(int position,  View convertView, ViewGroup parent) {
-            Dish dish=getItem(position);
-            ViewHolder viewHolder=new ViewHolder();
+    public View getView(final int position, View convertView, ViewGroup parent) {
+            final Dish dish=getItem(position);
+            final ViewHolder viewHolder=new ViewHolder();
             if(convertView==null){
                 convertView=getLayoutInflater().inflate(R.layout.shoppingcart_item,null);
 
@@ -85,21 +98,59 @@ public class carlistadapter extends ArrayAdapter<Dish>{
             viewHolder.btnincrease=convertView.findViewById(R.id.increase);
             viewHolder.txtdishname=convertView.findViewById(R.id.dishname);
             viewHolder.txtdishprice=convertView.findViewById(R.id.dishprice);
-
             viewHolder.txtdishname.setText(dish.getTitle());
             viewHolder.txtdishprice.setText(String.valueOf(dish.getPrice()));
+
+
+
+            //點選按鈕減少數量
+            viewHolder.btnreduce.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int q=Integer.parseInt(viewHolder.txtqty.getText().toString());
+                    q-=1;
+                    if(q<=0){
+                        q=0;
+                    }
+                    viewHolder.txtqty.setText(q+"");
+                    viewHolder.txtdishprice.setText(q*dish.getPrice()+"");
+
+                    notifyDataSetChanged();
+
+                }
+            });
+
+            //點選按鈕增加數量
+            viewHolder.btnincrease.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int q=Integer.parseInt(viewHolder.txtqty.getText().toString());
+                    q+=1;
+                    viewHolder.txtqty.setText(q+"");
+                    viewHolder.txtdishprice.setText(q*dish.getPrice()+"");
+
+                    notifyDataSetChanged();
+                }
+            });
+
+
             }else {
-                viewHolder=(ViewHolder)convertView.getTag();
+                //viewHolder=(ViewHolder)convertView.getTag();
             }
 
         return convertView;
     }
+
 }
-static private class ViewHolder{
+
+class ViewHolder{
         Button btnreduce;
         TextView txtqty;
         Button btnincrease;
         TextView txtdishname;
         TextView txtdishprice;
 }
+
 }
+
