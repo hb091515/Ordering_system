@@ -60,8 +60,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 // 建立 intent, 第一個參數為目前的 context, 第二個參數為要啟動的 Activity Class
                 Intent intentShopCartActivity = new Intent(First_Restaurant_Meal.this, Shopping_cart.class);
 
-                // Create the shop cart
-                // TODO: Create a new or Update the existing shop cart.
+                // Create a new or Update the existing shop cart.
                 if (shopCart == null)
                     shopCart = new ShopCart(selectItems);
                 else
@@ -107,7 +106,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         if (null != ShopCartHolder.getInstance().getShopCart()) {
             shopCart = ShopCartHolder.getInstance().getShopCart();
             selectItems = shopCart.getSelectedItems();
-            Log.d("**onResume()**", ": Recover the shopCart content!!");
+            Log.d("**onResume()**", ": FirstRestaurantMeal - Recover the shopCart content!!");
         }
 
     }

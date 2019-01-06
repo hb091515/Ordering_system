@@ -36,30 +36,24 @@ public class Shopping_cart extends AppCompatActivity {
 
         bindViewComponents();
 
-        //接收 shop cart 資料
-
-        shopCart = (ShopCart) getIntent().getSerializableExtra("cart");
-        selectItems = shopCart.getSelectedItems();
-        Log.d(TAG, "# of Items in the cart: " + selectItems.size());
-        numberOfItems = findViewById(R.id.numberOfItems);
-        numberOfItems.setText("" + selectItems.size());
-
-
-        //將加入購物車的餐點，顯示出來
-        carlistadapter list = new carlistadapter(this, selectItems);
-        shopcarlist = findViewById(R.id.dish_list);
-        shopcarlist.setAdapter(list);
-        list.notifyDataSetChanged();
+//        //接收 shop cart 資料
+//
+//        shopCart = (ShopCart) getIntent().getSerializableExtra("cart");
+//        selectItems = shopCart.getSelectedItems();
+//        Log.d(TAG, "# of Items in the cart: " + selectItems.size());
+//        numberOfItems = findViewById(R.id.numberOfItems);
+//        numberOfItems.setText("" + selectItems.size());
+//
+//
+//        //將加入購物車的餐點，顯示出來
+//        CartListAdapter list = new CartListAdapter(this, selectItems);
+//        shopcarlist = findViewById(R.id.dish_list);
+//        shopcarlist.setAdapter(list);
+//        list.notifyDataSetChanged();
 
         //點擊返回icon,關閉購物車頁面
         btnback.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // 返回前，保存購物車的内容。
-                StringBuilder sb = new StringBuilder();
-                sb.append("**Shopping_cart**:").append("Save to the ShopCartHolder with size:").append(shopCart.getSelectedItems().size());
-                Log.d("**Shopping_cart**:", sb.toString());
-                ShopCartHolder.getInstance().setShopCart(shopCart);
-
                 // Back to the previous activity
                 finish();
             }
@@ -71,6 +65,37 @@ public class Shopping_cart extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 返回前，保存購物車的内容。
+        StringBuilder sb = new StringBuilder();
+        sb.append("**Shopping_cart**:").append("Save to the ShopCartHolder with size:").append(shopCart.getSelectedItems().size());
+        Log.d("**Shopping_cart**:", sb.toString());
+        ShopCartHolder.getInstance().setShopCart(shopCart);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Show the shop cart content.
+
+        Log.d("**onStart()", "ShoppingCart Activity onStart()!!");
+        //接收 shop cart 資料
+
+        shopCart = (ShopCart) getIntent().getSerializableExtra("cart");
+        selectItems = shopCart.getSelectedItems();
+        Log.d(TAG, "# of Items in the cart: " + selectItems.size());
+        numberOfItems = findViewById(R.id.numberOfItems);
+        numberOfItems.setText("" + selectItems.size());
+
+
+        //將加入購物車的餐點，顯示出來
+        CartListAdapter list = new CartListAdapter(this, selectItems);
+        shopcarlist = findViewById(R.id.dish_list);
+        shopcarlist.setAdapter(list);
+        list.notifyDataSetChanged();
+    }
 
     private void bindViewComponents() {
         btnback = findViewById(R.id.btnbackicon);
@@ -78,11 +103,20 @@ public class Shopping_cart extends AppCompatActivity {
 
     }
 
+    /**
+     *  使用自定義的 ArrayAdapter
+     */
+    public class CartListAdapter extends ArrayAdapter<Dish> {
 
-    //使用自定義的ArrayAdapter
-    public class carlistadapter extends ArrayAdapter<Dish> {
+        class ViewHolder {
+            Button btnReduce;
+            TextView txtQty;
+            Button btnIncrease;
+            TextView txtDishName;
+            TextView txtLineTotal;
+        }
 
-        public carlistadapter(Context context, ArrayList<Dish> object) {
+        public CartListAdapter(Context context, ArrayList<Dish> object) {
             super(context, 0, object);
         }
 
@@ -102,9 +136,8 @@ public class Shopping_cart extends AppCompatActivity {
                 viewHolder.txtQty = convertView.findViewById(R.id.Quantity);
                 viewHolder.txtDishName = convertView.findViewById(R.id.dishname);
                 viewHolder.txtLineTotal = convertView.findViewById(R.id.dishprice);
-//            viewHolder.txtLineTotal.setText(String.valueOf(selectedDish.getPrice()));
 
-                // TODO: show the current line value.
+                // show the current line value.
                 ShopCart.ShopCartLine line = shopCart.findLine(selectedDish);
                 viewHolder.txtDishName.setText(selectedDish.getTitle());
                 viewHolder.txtQty.setText(line.getQty().toString());
@@ -115,7 +148,7 @@ public class Shopping_cart extends AppCompatActivity {
                 viewHolder.btnReduce.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO: codes for clicking the decrease button
+                        // codes for clicking the decrease button
                         // get select shop cart line id
                         // update the shop cart model
                         ShopCart.ShopCartLine line = shopCart.adjustQty(selectedDish, -1);
@@ -138,7 +171,7 @@ public class Shopping_cart extends AppCompatActivity {
                 viewHolder.btnIncrease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO: codes for clicking the increase button
+                        //clicking the increase button
                         ShopCart.ShopCartLine line = shopCart.adjustQty(selectedDish, 1);
                         viewHolder.txtQty.setText(line.getQty().toString());
                         viewHolder.txtLineTotal.setText(line.getTotal().toString());
@@ -162,13 +195,6 @@ public class Shopping_cart extends AppCompatActivity {
 
     }
 
-    class ViewHolder {
-        Button btnReduce;
-        TextView txtQty;
-        Button btnIncrease;
-        TextView txtDishName;
-        TextView txtLineTotal;
-    }
 
 }
 
