@@ -43,17 +43,30 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first__restaurant__meal);
         setTitle("手作茶坊");
-        mealListView = findViewById(R.id.meal_list);
-        meal_list adapter = new meal_list();
-        mealListView.setAdapter(adapter);
-        btnShopCart = findViewById(R.id.shopcart);
 
         //init the shop cart and the selected item list
         shopCart = null;
         selectItems = new ArrayList<>();
 
-        // Call Shopping_cart activity with the current cart.
-        // Pass current cart to
+        // Bind and config the view components
+        bindConfViewComponents();
+
+        bindActionListeners();
+
+
+    }
+
+
+    private void bindConfViewComponents(){
+        // Bind and config the view components
+        mealListView = findViewById(R.id.meal_list);
+        MealListAdapter adapter = new MealListAdapter();
+        mealListView.setAdapter(adapter);
+        btnShopCart = findViewById(R.id.shopcart);
+    }
+
+    private void bindActionListeners() {
+        //bind the action listeners
         btnShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +109,6 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
@@ -111,8 +123,10 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
     }
 
-
-    class meal_list extends BaseAdapter {
+    /**
+     * View adapter for the {@link #mealListView}.
+     */
+    class MealListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
             return name.length;
@@ -134,22 +148,13 @@ public class First_Restaurant_Meal extends AppCompatActivity {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.first_restaurant_meal_item, null);
 
-//                viewHolder=new ViewHolder();
                 TextView mealName = convertView.findViewById(R.id.mealname);
                 TextView mealCost = convertView.findViewById(R.id.mealcost);
-//                viewHolder.dname=convertView.findViewById(R.id.mealname);
-//                viewHolder.dprice=convertView.findViewById(R.id.mealcost);
-
-//                viewHolder.dname.setText(name[position]);
-
-//                viewHolder.dprice.setText(cost[position]);
                 mealName.setText(name[position]);
                 mealCost.setText(cost[position]);
-//                convertView.setTag(viewHolder);
-
 
             } else {
-                // 這行有什麼作用?
+                // Fixme: 這行有什麼作用?
 //                viewHolder=(ViewHolder)convertView.getTag();
             }
 

@@ -24,7 +24,7 @@ public class Shopping_cart extends AppCompatActivity {
     ArrayList<Dish> selectItems = new ArrayList<>();
     private static final String TAG = "**ShoppingCartActivity";
     TextView numberOfItems, txt_total;
-    ListView shopcarlist;
+    ListView shopCarList;
 
     private ShopCart shopCart;
 
@@ -36,21 +36,7 @@ public class Shopping_cart extends AppCompatActivity {
 
         bindViewComponents();
 
-//        //接收 shop cart 資料
-//
-//        shopCart = (ShopCart) getIntent().getSerializableExtra("cart");
-//        selectItems = shopCart.getSelectedItems();
-//        Log.d(TAG, "# of Items in the cart: " + selectItems.size());
-//        numberOfItems = findViewById(R.id.numberOfItems);
-//        numberOfItems.setText("" + selectItems.size());
-//
-//
-//        //將加入購物車的餐點，顯示出來
-//        CartListAdapter list = new CartListAdapter(this, selectItems);
-//        shopcarlist = findViewById(R.id.dish_list);
-//        shopcarlist.setAdapter(list);
-//        list.notifyDataSetChanged();
-
+        // Bind the action listener.
         //點擊返回icon,關閉購物車頁面
         btnback.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -60,7 +46,7 @@ public class Shopping_cart extends AppCompatActivity {
         });
 
 
-        //計算總金額
+        //ToDo: 計算總金額
 
 
     }
@@ -78,6 +64,7 @@ public class Shopping_cart extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Activity 顯示在 foreground 時， 取得最新的 shop cart 内容，並更新 shopCartList view.
         //Show the shop cart content.
 
         Log.d("**onStart()", "ShoppingCart Activity onStart()!!");
@@ -91,10 +78,10 @@ public class Shopping_cart extends AppCompatActivity {
 
 
         //將加入購物車的餐點，顯示出來
-        CartListAdapter list = new CartListAdapter(this, selectItems);
-        shopcarlist = findViewById(R.id.dish_list);
-        shopcarlist.setAdapter(list);
-        list.notifyDataSetChanged();
+        CartListAdapter cartListAdapter = new CartListAdapter(this, shopCart.getLines());
+        shopCarList = findViewById(R.id.dish_list);
+        shopCarList.setAdapter(cartListAdapter);
+        cartListAdapter.notifyDataSetChanged();
     }
 
     private void bindViewComponents() {
@@ -104,9 +91,15 @@ public class Shopping_cart extends AppCompatActivity {
     }
 
     /**
-     *  使用自定義的 ArrayAdapter
+     * Adapter for {@link #shopCarList}
+     *
+     * 使用 ViewHolder Pattern, 減少 findViewById() 的執行次數。
+     *
+     * 技術參考： https://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView
+     *
+     * Fixme_Done: ArrayAdapter 内的 Object 要爲 ShopCartLine. 更新資料模型後, 使用 notifyDataSetChanged() 自動更新內容.
      */
-    public class CartListAdapter extends ArrayAdapter<Dish> {
+    public class CartListAdapter extends ArrayAdapter<ShopCart.ShopCartLine> {
 
         class ViewHolder {
             Button btnReduce;
@@ -116,82 +109,75 @@ public class Shopping_cart extends AppCompatActivity {
             TextView txtLineTotal;
         }
 
-        public CartListAdapter(Context context, ArrayList<Dish> object) {
+        public CartListAdapter(Context context, ArrayList<ShopCart.ShopCartLine> object) {
             super(context, 0, object);
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            // get the current dish
-            final Dish selectedDish = getItem(position);
+            // get the current line
+            final ShopCart.ShopCartLine selectedLine = getItem(position);
             //
-            final ViewHolder viewHolder = new ViewHolder();
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.shoppingcart_item, null);
 
-                // bind the view components.
+            ViewHolder viewHolder;
+            // Create a new or get the existing viewHolder
+            if (convertView == null) {
+                // this is a new view.
+                //
+                // inflate the view
+                convertView = getLayoutInflater().inflate(R.layout.shoppingcart_item, null);
+                // Create a view holder
+                viewHolder = new ViewHolder();
+                // Save the component in the convertView to the viewHolder
                 viewHolder.btnReduce = convertView.findViewById(R.id.reduce);
                 viewHolder.btnIncrease = convertView.findViewById(R.id.increase);
-
                 viewHolder.txtQty = convertView.findViewById(R.id.Quantity);
                 viewHolder.txtDishName = convertView.findViewById(R.id.dishname);
                 viewHolder.txtLineTotal = convertView.findViewById(R.id.dishprice);
 
-                // show the current line value.
-                ShopCart.ShopCartLine line = shopCart.findLine(selectedDish);
-                viewHolder.txtDishName.setText(selectedDish.getTitle());
-                viewHolder.txtQty.setText(line.getQty().toString());
-                viewHolder.txtLineTotal.setText(line.getTotal().toString());
 
-
-                //點選按鈕減少數量
+                // Attach the event handlers to buttons
+                // Event Handler: 點選按鈕減少數量
                 viewHolder.btnReduce.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // codes for clicking the decrease button
                         // get select shop cart line id
                         // update the shop cart model
-                        ShopCart.ShopCartLine line = shopCart.adjustQty(selectedDish, -1);
-
-//                    int q=Integer.parseInt(viewHolder.txtQty.getText().toString());
-//                    q-=1;
-//                    if(q<=0){
-//                        q=0;
-//                    }
-                        // update the quantity and line total fields.
-                        viewHolder.txtQty.setText(line.getQty().toString());
-                        viewHolder.txtLineTotal.setText(line.getTotal().toString());
-
+//                        ShopCart.ShopCartLine line = shopCart.adjustQty(selectedLine, -1);
+                        selectedLine.adjustQty(-1);
                         notifyDataSetChanged();
-
                     }
                 });
 
-                //點選按鈕增加數量
+                //Event: 點選按鈕增加數量
                 viewHolder.btnIncrease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //clicking the increase button
-                        ShopCart.ShopCartLine line = shopCart.adjustQty(selectedDish, 1);
-                        viewHolder.txtQty.setText(line.getQty().toString());
-                        viewHolder.txtLineTotal.setText(line.getTotal().toString());
-
-//                    int q=Integer.parseInt(viewHolder.txtQty.getText().toString());
-//                    q+=1;
-//                    viewHolder.txtQty.setText(q+"");
-//                    viewHolder.txtLineTotal.setText(q*selectedDish.getPrice()+"");
-
+//                        ShopCart.ShopCartLine line = shopCart.adjustQty(selectedLine, 1);
+                        selectedLine.adjustQty(1);
                         notifyDataSetChanged();
                     }
                 });
 
+                // store the view holder into the convertView's tag property
+                convertView.setTag(viewHolder);
+
             } else {
-                // Case: convertView != null
-                //viewHolder=(ViewHolder)convertView.getTag();
+                // Case: convertView != null. Use the existing viewHolder.
+                viewHolder=(ViewHolder) convertView.getTag();
+
             }
 
+            // Populate data object to the viewHolder.
+            viewHolder.txtDishName.setText(selectedLine.getItem().getTitle());
+            viewHolder.txtQty.setText(selectedLine.getQty().toString());
+            viewHolder.txtLineTotal.setText(selectedLine.getTotal().toString());
             return convertView;
         }
+
+
 
     }
 

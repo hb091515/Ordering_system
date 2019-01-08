@@ -10,27 +10,27 @@ import java.util.Map;
 /**
  * 購物車
  *
- * 裝載 {@link com.example.user.ordering_system.entities.Dish} 物件. 因為要透過 {@code Intent} 傳遞,
- * 所以實作 {@code Serializable} 界面.
+ * 裝載 {@link ShopCartLine} 物件.
+ * 因為要透過 {@code Intent} 傳遞,  所以實作 {@code Serializable} 界面.
  *
  * @author hychen39@gm.cyut.edu.tw
  * @since 2018/12/16
+ *
+ * @see ShopCartLine
+ * @see Dish
  */
 public class ShopCart implements Serializable {
+    // *** Fields ***
+//    private ArrayList<ShopCartLine> lines;
+
+    private Map<Dish, ShopCartLine> linesMap;
+
+
 
     /**
-     * Update the shop cart lines.
-     * @param selectItems
-     */
-    public void updateList(ArrayList<Dish> selectItems) {
-        for(Dish dish : selectItems){
-            if (!linesMap.containsKey(dish))
-                linesMap.put(dish, new ShopCartLine(dish, 1));
-        }
-    }
-
-    /**
-     * ShopCart Line
+     * ShopCart Line static class.
+     * A line contains the following fields: item ({@link Dish } type), quantity, and line total.
+     *
      */
     public static class ShopCartLine implements Serializable{
         private Dish item;
@@ -42,7 +42,7 @@ public class ShopCart implements Serializable {
             this.item = item;
             this.qty = qty;
             this.total = qty * item.getPrice();
-            
+
         }
 
         public Dish getItem() {
@@ -68,41 +68,50 @@ public class ShopCart implements Serializable {
         public void setTotal(Double total) {
             this.total = total;
         }
+
+
+
+        /**
+         * Adjust the quantity of the current line.
+         * The method updates the {@link #qty} property of the object.
+         * The quantity does not allow negative values.
+         *
+         * @param delta positive number means increase; negative number means decrease.
+         * @return Adjusted quantity.
+         */
+        public Integer adjustQty(Integer delta){
+            Integer currQty = this.getQty();
+            currQty += delta;
+            if (currQty < 0){
+                currQty = 0;
+            }
+            this.setQty(currQty);
+            return currQty;
+        }
     }
 
-    private ArrayList<ShopCartLine> lines;
-
-    private Map<Dish, ShopCartLine> linesMap;
-
     /**
-     * @deprecated
+     * Update the shop cart lines by using the existing select item list.
+     * Only the new items will be added into the cart.
+     *
+     * @param selectItems User 選擇的品項
      */
-    private ArrayList<Dish> items;
+    public void updateList(ArrayList<Dish> selectItems) {
+        for(Dish dish : selectItems){
+            if (!linesMap.containsKey(dish))
+                linesMap.put(dish, new ShopCartLine(dish, 1));
+        }
+    }
+
 
 
     public ShopCart(ArrayList<Dish> items) {
-//        this.items = items;
-//        setLines(items);
         linesMap = new HashMap<>();
         for(Dish dish: items){
             linesMap.put(dish, new ShopCartLine(dish, 1));
         }
     }
 
-    public ArrayList<ShopCartLine> getLines() {
-        return lines;
-    }
-
-    /**
-     * Put the select items to the shop cart
-     * @param selectItems
-     */
-    public void setLines(ArrayList<Dish> selectItems) {
-        this.lines = new ArrayList<ShopCartLine>();
-        for(Dish dish: selectItems){
-            lines.add(new ShopCartLine(dish, 1));
-        }
-    }
 
     /**
      * Get the items in the cart.
@@ -114,21 +123,7 @@ public class ShopCart implements Serializable {
        return selectItems;
     }
 
-    /**
-     * @deprecated
-     * @param items
-     */
-    public void setItems(ArrayList<Dish> items) {
-        this.items = items;
-    }
 
-    public Map<Dish, ShopCartLine> getLinesMap() {
-        return linesMap;
-    }
-
-    public void setLinesMap(Map<Dish, ShopCartLine> linesMap) {
-        this.linesMap = linesMap;
-    }
 
     /**
      * Adjust the quantity and the total of shop cart line.
@@ -150,5 +145,13 @@ public class ShopCart implements Serializable {
 
     public ShopCartLine findLine(Dish dish){
         return linesMap.get(dish);
+    }
+
+    /**
+     * Get all lines in the cart.
+     * @return All lines in the cart.
+     */
+    public ArrayList<ShopCartLine> getLines() {
+        return new ArrayList<>(linesMap.values());
     }
 }
