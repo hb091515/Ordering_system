@@ -98,6 +98,8 @@ public class Shopping_cart extends AppCompatActivity {
             viewHolder.btnincrease=convertView.findViewById(R.id.increase);
             viewHolder.txtdishname=convertView.findViewById(R.id.dishname);
             viewHolder.txtdishprice=convertView.findViewById(R.id.dishprice);
+
+
             viewHolder.txtdishname.setText(dish.getTitle());
             viewHolder.txtdishprice.setText(String.valueOf(dish.getPrice()));
 

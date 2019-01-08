@@ -31,7 +31,7 @@ import static android.media.CamcorderProfile.get;
  */
 public class First_Restaurant_Meal extends AppCompatActivity {
 
-
+    TextView iconTextView;
     ListView mealListView;
     String[] name = {"紅茶", "綠茶", "奶茶"};
     String[] cost = {"$20", "$30", "$40"};
@@ -46,6 +46,7 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first__restaurant__meal);
         setTitle("手作茶坊");
+        iconTextView=findViewById(R.id.icon_quantity);
         mealListView = findViewById(R.id.meal_list);
         meal_list adapter=new meal_list();
         mealListView.setAdapter(adapter);
@@ -85,10 +86,13 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 }else{
                     selectItems.add(dish);
                     Toast.makeText(First_Restaurant_Meal.this,dish.getTitle()+"add to the cart",Toast.LENGTH_SHORT).show();
+                    iconTextView.setText(selectItems.size()+"");
+                    iconTextView.setVisibility(view.VISIBLE);
                 }
 
             }
         });
+
 
     }
 
