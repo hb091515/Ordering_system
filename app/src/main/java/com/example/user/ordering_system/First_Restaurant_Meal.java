@@ -19,10 +19,9 @@ import android.widget.Toast;
 
 import com.example.user.ordering_system.entities.Dish;
 import com.example.user.ordering_system.shopCart.ShopCart;
+import com.example.user.ordering_system.shopCart.ShopCartHolder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 
 import static android.media.CamcorderProfile.get;
 
@@ -35,10 +34,12 @@ public class First_Restaurant_Meal extends AppCompatActivity {
     ListView mealListView;
     String[] name = {"紅茶", "綠茶", "奶茶"};
     String[] cost = {"$20", "$30", "$40"};
-    double [] price = {20, 30, 40};
+    double[] price = {20, 30, 40};
 
-    ArrayList<Dish> selectItems = new ArrayList<>();
+    ArrayList<Dish> selectItems;
     ImageButton btnShopCart;
+
+    ShopCart shopCart;
 
 
     @Override
@@ -46,20 +47,44 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first__restaurant__meal);
         setTitle("手作茶坊");
+
+        //init the shop cart and the selected item list
+        shopCart = null;
+        selectItems = new ArrayList<>();
+
+        // Bind and config the view components
+        bindConfViewComponents();
+
+        bindActionListeners();
+
+
+    }
+
+
+    private void bindConfViewComponents(){
+        // Bind and config the view components
         iconTextView=findViewById(R.id.icon_quantity);
         mealListView = findViewById(R.id.meal_list);
-        meal_list adapter=new meal_list();
+        MealListAdapter adapter = new MealListAdapter();
         mealListView.setAdapter(adapter);
-        btnShopCart =findViewById(R.id.shopcart);
+        btnShopCart = findViewById(R.id.shopcart);
+    }
 
-        // Call Shopping_cart activity with the current cart.
-        // Pass current cart to
+    private void bindActionListeners() {
+        //bind the action listeners
         btnShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 建立 intent, 第一個參數為目前的 context, 第二個參數為要啟動的 Activity Class
-                Intent intentShopCartActivity=new Intent(First_Restaurant_Meal.this, Shopping_cart.class);
-                ShopCart shopCart = new ShopCart(selectItems);
+                Intent intentShopCartActivity = new Intent(First_Restaurant_Meal.this, Shopping_cart.class);
+
+                // Create a new or Update the existing shop cart.
+                if (shopCart == null)
+                    shopCart = new ShopCart(selectItems);
+                else
+                    //existing shop cart
+                    shopCart.updateList(selectItems);
+
                 intentShopCartActivity.putExtra("cart", shopCart);
                 startActivity(intentShopCartActivity);
             }
@@ -75,15 +100,15 @@ public class First_Restaurant_Meal extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 sb.append("Position: " + position)
                         .append(" Row ID: " + id);
-                Log.e(tag + "Position", sb.toString() );
+                Log.e(tag + "Position", sb.toString());
                 Dish dish = new Dish(name[position], price[position]);
 
 
 
                 //判斷dish有沒有已經加入購物車裡面，避免餐點重複加入
-                if(selectItems.contains(dish)){
-                    Toast.makeText(First_Restaurant_Meal.this,dish.getTitle()+"already esists in cart",Toast.LENGTH_SHORT).show();
-                }else{
+                if (selectItems.contains(dish)) {
+                    Toast.makeText(First_Restaurant_Meal.this, dish.getTitle() + "already esists in cart", Toast.LENGTH_SHORT).show();
+                } else {
                     selectItems.add(dish);
                     Toast.makeText(First_Restaurant_Meal.this,dish.getTitle()+"add to the cart",Toast.LENGTH_SHORT).show();
                     iconTextView.setText(selectItems.size()+"");
@@ -96,12 +121,22 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
     }
 
-//    private static class ViewHolder{
-//        TextView dname;
-//        TextView dprice;
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // recover the shop cart and the select list.
+        if (null != ShopCartHolder.getInstance().getShopCart()) {
+            shopCart = ShopCartHolder.getInstance().getShopCart();
+            selectItems = shopCart.getSelectedItems();
+            Log.d("**onResume()**", ": FirstRestaurantMeal - Recover the shopCart content!!");
+        }
 
-    class meal_list extends BaseAdapter {
+    }
+
+    /**
+     * View adapter for the {@link #mealListView}.
+     */
+    class MealListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
             return name.length;
@@ -137,8 +172,8 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 //                convertView.setTag(viewHolder);
 
 
-            }else{
-                // 這行有什麼作用?
+            } else {
+                // Fixme: 這行有什麼作用?
 //                viewHolder=(ViewHolder)convertView.getTag();
             }
 
