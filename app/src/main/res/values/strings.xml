@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Ordering_system</string>
+    <string name="search_restaurant">搜尋餐廳</string>
+    <string name="first_restaurant">一餐</string>
+    <string name="second_restaurant">二餐</string>
+    <string name="third_restaurant">三餐</string>
+    <string name="recommend_restaurant">推薦餐廳</string>
+    <string name="all_restaurant">所有餐廳</string>
+    <string name="user">會員</string>
+    <string name="reduce">-</string>
+
+
+</resources>
