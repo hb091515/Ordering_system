@@ -60,6 +60,12 @@ public class First_Restaurant_Meal extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        
+    }
 
     private void bindConfViewComponents(){
         // Bind and config the view components

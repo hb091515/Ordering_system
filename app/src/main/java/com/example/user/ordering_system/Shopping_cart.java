@@ -1,18 +1,14 @@
 package com.example.user.ordering_system;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,9 +26,9 @@ public class Shopping_cart extends AppCompatActivity {
     private static final String TAG = "**ShoppingCartActivity";
     TextView numberOfItems, txt_total;
     ListView shopCarList;
+    EditText txtName, txtPhoneNumber, txtEmail;
 
     private ShopCart shopCart;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +48,6 @@ public class Shopping_cart extends AppCompatActivity {
 
 
         //ToDo: 計算總金額
-
 
     }
 
@@ -90,6 +85,9 @@ public class Shopping_cart extends AppCompatActivity {
     }
 
     private void bindViewComponents() {
+        txtName=findViewById(R.id.Name);
+        txtPhoneNumber=findViewById(R.id.PhoneNumber);
+        txtEmail=findViewById(R.id.Email);
         btnback = findViewById(R.id.btnbackicon);
         txt_total = findViewById(R.id.total);
 
@@ -139,6 +137,7 @@ public class Shopping_cart extends AppCompatActivity {
                 viewHolder.txtQty = convertView.findViewById(R.id.Quantity);
                 viewHolder.txtDishName = convertView.findViewById(R.id.dishname);
                 viewHolder.txtLineTotal = convertView.findViewById(R.id.dishprice);
+
 
 
                 // Attach the event handlers to buttons

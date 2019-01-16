@@ -154,4 +154,6 @@ public class ShopCart implements Serializable {
     public ArrayList<ShopCartLine> getLines() {
         return new ArrayList<>(linesMap.values());
     }
+
+
 }

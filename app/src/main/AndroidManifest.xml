@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".First_Restaurant" />
         <activity android:name=".First_Restaurant_Meal" />
-        <activity android:name=".Shopping_cart"></activity>
+        <activity android:name=".Shopping_cart" />
+        <activity android:name=".Order"></activity>
     </application>
 
 </manifest>
