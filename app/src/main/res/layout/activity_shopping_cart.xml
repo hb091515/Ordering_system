@@ -6,152 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".Shopping_cart">
 
-
-    <!--nav bar-->
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffa726"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/btnbackicon"
-            android:layout_width="wrap_content"
-            android:padding="8dp"
-            android:layout_height="match_parent"
-            android:background="#ffa726"
-            android:src="@drawable/ic_keyboard_backspace_black_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="購物車"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/numberOfItems"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-
     <!--ListView height-->
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+
+    <ListView
+        android:id="@+id/dish_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <ListView
-            android:id="@+id/dish_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="4dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="姓名"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/Name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="4dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="手機號碼"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/PhoneNumber"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:inputType="number"
-                android:maxLength="10"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="4dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="電子郵件地址"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/Email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:inputType="textEmailAddress"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!--Total Price-->
@@ -177,7 +46,6 @@
             android:layout_marginBottom="8dp"
             android:text="總計"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toStartOf="@+id/total" />
 
         <TextView
@@ -189,7 +57,6 @@
             android:layout_marginBottom="8dp"
             android:text="0"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent" />
 
 
@@ -211,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/Check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -220,9 +87,10 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:background="#ffa726"
-            android:text="下訂單"
+            android:text="結帳"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#ffffff"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

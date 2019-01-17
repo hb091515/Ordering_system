@@ -1,9 +1,13 @@
 package com.example.user.ordering_system;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,12 +25,15 @@ import java.util.ArrayList;
 
 public class Shopping_cart extends AppCompatActivity {
 
-    ImageButton btnback;
+
+    Button btnCheck;
     ArrayList<Dish> selectItems = new ArrayList<>();
     private static final String TAG = "**ShoppingCartActivity";
     TextView numberOfItems, txt_total;
     ListView shopCarList;
-    EditText txtName, txtPhoneNumber, txtEmail;
+
+
+    Bundle bundle;
 
     private ShopCart shopCart;
 
@@ -35,14 +42,55 @@ public class Shopping_cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
+        setTitle("購物車");
+
         bindViewComponents();
+
+        bundle = new Bundle();
 
         // Bind the action listener.
         //點擊返回icon,關閉購物車頁面
-        btnback.setOnClickListener(new View.OnClickListener() {
+
+
+        //按下按鈕,跑出Dialog視窗
+        btnCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                // Back to the previous activity
-                finish();
+                final AlertDialog.Builder infoBuilder = new AlertDialog.Builder(Shopping_cart.this);
+                infoBuilder.setTitle("聯絡資料");
+
+                View view = getLayoutInflater().inflate(R.layout.form,null);
+                final EditText edName = view.findViewById(R.id.Name);
+                final EditText edCellPhone = view.findViewById(R.id.CellPhone);
+                final EditText edEmail = view.findViewById(R.id.Email);
+
+                //點擊確認按鈕送出填寫人資料
+                infoBuilder.setNegativeButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String Name = edName.getText().toString();
+                        String CellPhone = edCellPhone.getText().toString();
+                        String Email = edEmail.getText().toString();
+                        bundle.putString("name",Name);
+                        bundle.putString("cellphone",CellPhone);
+                        bundle.putString("email",Email);
+                        Intent intent=new Intent(Shopping_cart.this,Order.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                });
+                //點擊取消按鈕關閉Dialog畫面
+                infoBuilder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //若取消,則關閉Dialog視窗
+                        dialog.dismiss();
+                    }
+                });
+
+                infoBuilder.setView(view);
+                AlertDialog dialog = infoBuilder.create();
+                dialog.show();
             }
         });
 
@@ -73,8 +121,7 @@ public class Shopping_cart extends AppCompatActivity {
         shopCart = (ShopCart) getIntent().getSerializableExtra("cart");
         selectItems = shopCart.getSelectedItems();
         Log.d(TAG, "# of Items in the cart: " + selectItems.size());
-        numberOfItems = findViewById(R.id.numberOfItems);
-        numberOfItems.setText("" + selectItems.size());
+
 
 
         //將加入購物車的餐點，顯示出來
@@ -85,10 +132,7 @@ public class Shopping_cart extends AppCompatActivity {
     }
 
     private void bindViewComponents() {
-        txtName=findViewById(R.id.Name);
-        txtPhoneNumber=findViewById(R.id.PhoneNumber);
-        txtEmail=findViewById(R.id.Email);
-        btnback = findViewById(R.id.btnbackicon);
+        btnCheck=findViewById(R.id.Check);
         txt_total = findViewById(R.id.total);
 
     }

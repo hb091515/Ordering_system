@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,14 +8,15 @@
 
     <Button
         android:id="@+id/reduce"
-        android:background="#ffffff"
-        android:text="-"
-        android:textAppearance="?android:textAppearanceMedium"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:text="─"
+        android:textColor="#ffa726"
+        android:textAppearance="?android:textAppearanceMedium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,21 +27,22 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:textAppearance="?android:textAppearanceMedium"
         android:text="1"
+        android:textAppearance="?android:textAppearanceMedium"
         app:layout_constraintStart_toEndOf="@+id/reduce"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/increase"
-        android:background="#ffffff"
-        android:text="+"
-        android:textAppearance="?android:textAppearanceMedium"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:text="+"
+        android:background="#00000000"
+        android:textColor="#ffa726"
+        android:textAppearance="?android:textAppearanceMedium"
         app:layout_constraintStart_toEndOf="@+id/Quantity"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,8 +50,8 @@
         android:id="@+id/dishname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="餐點"
         android:textAppearance="?android:textAppearanceMedium"
@@ -62,13 +63,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="價錢"
         android:textAppearance="?android:textAppearanceMedium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 
 </android.support.constraint.ConstraintLayout>

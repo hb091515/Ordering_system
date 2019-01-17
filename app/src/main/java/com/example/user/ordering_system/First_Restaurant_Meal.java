@@ -2,6 +2,7 @@ package com.example.user.ordering_system;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -48,24 +49,19 @@ public class First_Restaurant_Meal extends AppCompatActivity {
         setContentView(R.layout.activity_first__restaurant__meal);
         setTitle("手作茶坊");
 
+
+
         //init the shop cart and the selected item list
         shopCart = null;
-        selectItems = new ArrayList<>();
+        selectItems=new ArrayList<>();
 
         // Bind and config the view components
         bindConfViewComponents();
-
         bindActionListeners();
 
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        
-    }
 
     private void bindConfViewComponents(){
         // Bind and config the view components
